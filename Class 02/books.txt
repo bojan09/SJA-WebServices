@@ -1,0 +1,35 @@
+{
+    title: 'Book title',
+    author:[
+        'Author Name'
+    ],
+    genre[
+        'Sci-Fi',
+        'Horror'
+    ],
+    description : 'Some long description...',
+    characters:[
+        'character 1',
+        'character 2',
+    ],
+    publisher: 'Publisher Name',
+    page_num: 324,
+    publisher_year: '2022-10-06T19:30:00.000Z' 
+}
+
+// Enpoints
+
+/*
+
+get /books
+get /books/:id
+get /books/:id/characters
+get /books/:id/authors
+get /books/:id/genres
+
+post /books
+post /books/:id
+patch /books/:id
+delete /books/:id
+
+*/

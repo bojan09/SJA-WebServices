@@ -1,0 +1,54 @@
+Passwords are not being encrypted nor left as plain text. They are being hashed. 
+
+Data hashing -- Google this!
+
+Example for encrypt:
+
+2 + 3 = 5 
+
+2 plain text
++ algorythm
+3 encryption key
+5 cypher
+
+decrypt 
+
+5 - 3 = 2
+
+-----------------------
+Data hashing 
+
+The end hashing is unique, you'll never recive the same end
+
+Example:
+
+Дали 2 ? n е = 8  -- True/False
+-----------------------
+2 ? n = 8
+2 ? n = 20
+2 ? n = 1
+....................
+
+1. Plain text = Extremly Bad!
+2. Encrypted password - Bad!
+3. Hashed password - OK
+.......
+Others:
+4. 2 Factor Auth 
+5. Biometrics
+6. Physical key/certification
+
+
+for post request
+
+
+  console.log(req.body);
+
+!encrypt the password
+
+  req.body.password = bcrypt.hashSync(req.body.password);
+!see the encrypted pasw
+
+  console.log(req.body);
+  return res.send("ok");
+  
