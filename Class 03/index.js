@@ -1,5 +1,6 @@
 const express = require("express");
 const auth = require("./handlers/auth");
+const { expressjwt: jwt } = require("express-jwt");
 
 const db = require("./pkg/db");
 db.init();
@@ -8,6 +9,24 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+// JWT проверка
+// Прави проверка на токен секаде
+app.use(
+  jwt({
+    algorithms: ["H256"],
+    secret: `pero123`,
+  })
+    // Освен на овие рути
+    .unless({
+      path: [
+        "api/v1/auth/create-account",
+        "api/v1/auth/login",
+        "api/v1/auth/forgot-password",
+        "api/v1/auth/reset-password",
+      ],
+    })
+);
 
 // Endpoints
 // Create account
@@ -24,6 +43,15 @@ app.post("/api/v1/auth/reset-password", auth.resetPassword);
 
 // Validate token
 app.post("api/v1/auth/validate-token", auth.validate);
+
+// Проверува дали грешката е UnauthorizedError, тогаш враќа invalid token
+app.use(function (err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).send("invalid token...");
+  } else {
+    next(err);
+  }
+});
 
 app.listen(8080, (err) => {
   if (err) {
