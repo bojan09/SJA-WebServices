@@ -1,27 +1,59 @@
 // Router
 const router = require("express").Router();
+// Auth
+const verify = require("./verifyToken");
+// Recipes Model
+const Recipe = require("../models/Recipes");
 
-router.post("/recipes", async (req, res) => {
-  res.json(req.body);
-
-  // Create new user data
+// Create new recipe
+router.post("/recipe", verify, (req, res) => {
   const recipe = new Recipe({
-    name: req.body.name,
-    email: req.body.description,
+    recipeName: req.body.recipeName,
+    description: req.body.description,
+    ingredients: req.body.ingredients,
   });
-  try {
-    // Save the user
-    const savedRecipe = await user.save();
-    res.send(savedRecipe);
-  } catch (error) {
-    res.status(400).send(err);
-  }
+
+  recipe
+    .save()
+    .then(() => res.json("Recipe added"))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.get("/recipes", (req, res) => {
-  res.json(
-    `The recipe is: ${req.body.name} , description: ${req.body.description}`
-  );
+// Get all recipes
+router.get("/recipe", (req, res) => {
+  Recipe.find()
+    .then((recipe) => res.json(recipe))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// Get one Recipe
+router.get("recipe/:id", (req, res) => {
+  Recipe.findById(req.params.id)
+    .then((recipe) => res.json(recipe))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// Update recipe
+router.put("recipe/:id", (req, res) => {
+  Recipe.findById(req.params.id)
+    .then((recipe) => {
+      recipeName = req.body.recipeName;
+      description = req.body.description;
+      ingredients = req.body.ingredients;
+
+      recipe
+        .save()
+        .then(() => res.json("Recipe updated"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// Delete Recipe
+router.delete("recipe/:id", (req, res) => {
+  Recipe.findByIdAndDelete(req.params.id)
+    .then(() => res.json("Recipe Deleted"))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;

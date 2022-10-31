@@ -22,4 +22,6 @@ app.use(express.json());
 app.use("/api/user", authRoute);
 app.use("/api/user", recipeRoute);
 
+// Routes
+
 app.listen(8080, () => console.log(`Server is Up & Running`));

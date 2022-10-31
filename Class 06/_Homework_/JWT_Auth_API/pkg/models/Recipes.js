@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = mongoose.Schema({
-  name: {
+  recipeName: {
     type: String,
     required: true,
     min: 4,
@@ -10,8 +10,15 @@ const recipeSchema = mongoose.Schema({
   description: {
     type: String,
     required: true,
-    min: 20,
+    min: 5,
     max: 1000,
+  },
+
+  ingredients: {
+    type: [String],
+    required: true,
+    min: 2,
+    max: 20,
   },
   date: {
     type: Date,
