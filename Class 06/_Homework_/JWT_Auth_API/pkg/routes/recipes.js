@@ -36,6 +36,7 @@ router.get("recipe/:id", (req, res) => {
 // Update recipe
 router.put("recipe/:id", (req, res) => {
   Recipe.findById(req.params.id)
+    // Recipe.findById({id:_id})
     .then((recipe) => {
       recipeName = req.body.recipeName;
       description = req.body.description;
@@ -51,6 +52,7 @@ router.put("recipe/:id", (req, res) => {
 
 // Delete Recipe
 router.delete("recipe/:id", (req, res) => {
+  // Recipe.findByIdAndDelete({ id: _id })
   Recipe.findByIdAndDelete(req.params.id)
     .then(() => res.json("Recipe Deleted"))
     .catch((err) => res.status(400).json("Error: " + err));
