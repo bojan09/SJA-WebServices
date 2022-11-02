@@ -27,15 +27,15 @@ router.get("/recipe", (req, res) => {
 });
 
 // Get one Recipe
-router.get("recipe/:id", (req, res) => {
+router.get("recipe/:id", verify, (req, res) => {
   Recipe.findById(req.params.id)
     .then((recipe) => res.json(recipe))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // Update recipe
-router.put("recipe/:id", (req, res) => {
-  Recipe.findById(req.params.id)
+router.put("recipe/:id", verify, (req, res) => {
+  Recipe.findById(req.params.id, req.body)
     // Recipe.findById({id:_id})
     .then((recipe) => {
       recipeName = req.body.recipeName;
@@ -51,7 +51,7 @@ router.put("recipe/:id", (req, res) => {
 });
 
 // Delete Recipe
-router.delete("recipe/:id", (req, res) => {
+router.delete("recipe/:id", verify, (req, res) => {
   // Recipe.findByIdAndDelete({ id: _id })
   Recipe.findByIdAndDelete(req.params.id)
     .then(() => res.json("Recipe Deleted"))
