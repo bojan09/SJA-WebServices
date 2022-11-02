@@ -1,6 +1,10 @@
 const upload = async (req, res) => {
   const path = require("path");
 
+  const extRegex = new RegExp(/^(\.png|\.jpg)$/);
+
+  // if (path.extname(req.files.slika.name).toLowerCase() !== ['.png'||".jpg"])
+  // if (path.extname(req.files.slika.name).toLowerCase() !== extRegex)
   if (path.extname(req.files.slika.name).toLowerCase() !== ".jpg") {
     res.status(406).contentType("text/plain").end("Format is Not Acceptable");
   } else {
