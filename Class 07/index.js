@@ -7,14 +7,7 @@ const storage = require("./handlers/storage");
 
 const app = express();
 
-app.use(
-  fileUpload({
-    limits: {
-      fileSize: 1000000,
-    },
-    abortOnLimit: true,
-  })
-);
+app.use(fileUpload());
 
 app.post("/app/v1/storage", storage.upload);
 

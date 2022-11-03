@@ -1,22 +1,19 @@
+require("mime-types");
+
 const upload = async (req, res) => {
-  const path = require("path");
+  const imgTypes = ["image/jpg", "image/png", "image/ico", "image/jpeg"];
 
-  // const extRegex = new RegExp(/^(\.png|\.jpg)$/);
-
-  // if (path.extname(req.files.slika.name).toLowerCase() === ['.png'||".jpg"])
-  // if (path.extname(req.files.slika.name).toLowerCase() === extRegex)
-  // if (path.extname(req.files.slika.name).toLowerCase() === ".jpg")
-
-  const imgTypes = [".jpg", ".png", ".ico", ".jpeg"];
-
-  if (path.extname(req.files.slika.name).toLowerCase() === imgTypes[0]) {
+  if (imgTypes.includes(req.files.slika.mimetype)) {
     req.files.slika.mv(`${__dirname}/../uploads/${req.files.slika.name}`);
     res.status(200).contentType("text/plain").end("File uploaded!");
   } else {
-    res.status(406).contentType("text/plain").end("Format is Not Acceptable");
+    res.status(403).contentType("text/plain").end("You can't use this format");
+  }
+  // Size check
+  if (req.files.slika.size > 1048576) {
+    res.status(403).send("You can't upload this file,the max is 1mb");
   }
 };
-
 const download = async (req, res) => {
   res.send("OK");
 };
